@@ -1,0 +1,9 @@
+apps:
+  - script: ./src/app.js
+    name: 'api'
+    interpreter: './node_modules/.bin/babel-node'
+    watch: true
+    instances: 1
+    exec_mode: 'fork'
+    env:
+      NODE_ENV: 'development'
