@@ -13,7 +13,14 @@ const validateAuth = async (ctx, next) => {
 
     await Bluebird.resolve(Auth().verifyIdToken(id_token))
 
-      .then( decoded => { ctx.state.user = { id: decoded.user_id } } )
+      .then( decoded => { 
+        ctx.state.user = { 
+          uid            : decoded.user_id,
+          name           : decoded.name,
+          email          : decoded.email,
+          email_verified : decoded.email_verified
+        } 
+      })
 
       .then( () => next() )
 

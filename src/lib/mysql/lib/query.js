@@ -48,9 +48,10 @@ const throwNotFoundError = _.curry((sql, params) => {
 const run = _.curry((db, sql, params) => {
   const sql_tag = chalk.blue('SQL:');
   const param_tag = chalk.blue('PARAMS:');
+
   debug(`\n ${sql_tag} \n ${sql} \n ${param_tag} \n ${inspect(params)} \n`);
 
-  return db.execute(sql, params).then(_.head)
+  return db.query(sql, params).then(_.head)
 });
 
 

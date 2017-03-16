@@ -162,11 +162,10 @@ const save = R.curry(
 
     }
 
-
     return Bluebird.resolve(request)
 
     .then(preSave(sql_factory, conn, current))
-
+    
     .then(_save)
 
     .then(retrieve)

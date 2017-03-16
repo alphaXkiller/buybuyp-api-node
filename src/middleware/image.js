@@ -35,7 +35,7 @@ const uploadToS3 = async (ctx, next) => Bluebird
 
 
 const save = async (ctx, next) => Bluebird
-  .map(ctx.state.image.urls, path => Image.save(ctx.mysql, {path}))
+  .map(ctx.state.image.urls, path => Image.save(ctx.mysql, [{path}]))
 
   .then( images => { ctx.body = images } )
 

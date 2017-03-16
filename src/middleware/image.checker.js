@@ -49,7 +49,7 @@ const postImage = async (ctx, next) => {
           error_message: err.message,
           validation_error: err.validation
         }
-      } else next(err) 
+      } else throw err
     })
   )
 }

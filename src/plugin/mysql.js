@@ -9,6 +9,7 @@ const pool = PMysql.createPool({
   user: 'root',
   password: 'Test123Test',
   database: 'lib',
+  namedPlaceholders: true,
   Promise: Bluebird
 })
 
