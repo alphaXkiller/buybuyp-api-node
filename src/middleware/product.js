@@ -28,7 +28,7 @@ const mergeGroupToRowsById = R.curry( (obj, key, group_obj) =>
 // ======================================
 // ========== EXPORT FUNCTION ===========
 // ======================================
-const save = async (ctx, next) =>Product
+const save = async (ctx, next) => Product
   .save(ctx.mysql, [{
     name        : ctx.checker.name,
     description : ctx.checker.description,
@@ -36,7 +36,7 @@ const save = async (ctx, next) =>Product
     price       : ctx.checker.price,
     address     : ctx.checker.address
   }])
-  .tap(() => console.log(ctx.state.user))
+
   .then( product => Bluebird
     .map( ctx.checker.image_ids, image_id => ProductImage.save(ctx.mysql)([{
       product_id: product.id,
