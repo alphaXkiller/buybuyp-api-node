@@ -1,12 +1,17 @@
 import Router from 'koa-router'
 
+import User from '../middleware/user.js'
+
 const routes = () => {
   const router = Router()
 
-  router.get('/', function (ctx, next) {
-    console.log('still get to user')
-    ctx.body = 'here'
-  })
+  router.post('/:uid/validate',
+    // (ctx, next) => { 
+    //   console.log(ctx.mysql)
+    //   return next()
+    // }, 
+    User.addIfNotFound
+  )
 
   return router.routes()
 }

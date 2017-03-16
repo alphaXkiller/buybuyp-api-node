@@ -3,7 +3,7 @@ import Jwt from 'jsonwebtoken'
 import Moment from 'moment'
 import Bluebird from 'bluebird'
 
-import { auth } from '../domain/index.js'
+import { Auth } from '../domain/index.js'
 import Domain from '../domain/index.js'
 
 
@@ -12,7 +12,7 @@ const signup = async (ctx, next) => {
   const password = R.path(['request', 'body', 'password'])(ctx)
   const displayName = R.path(['request', 'body', 'name'])(ctx)
 
-  await Bluebird.resolve(auth().createUser({email, password, displayName}))
+  await Bluebird.resolve(Auth().createUser({email, password, displayName}))
 
     .then(R.pick([
       'uidInternal',
@@ -40,43 +40,43 @@ const signup = async (ctx, next) => {
 }
 
 
-const login = async (ctx, next) => {
-  const provider = R.path(['request', 'body', 'provider'])(ctx)
-  const id_token = R.path(['request', 'body', 'id_token'])(ctx)
+// const login = async (ctx, next) => {
+//   const provider = R.path(['request', 'body', 'provider'])(ctx)
+//   const id_token = R.path(['request', 'body', 'id_token'])(ctx)
 
-  await Bluebird.resolve(auth().verifyIdToken(id_token))
+//   await Bluebird.resolve(Auth().verifyIdToken(id_token))
 
-    .then(R.applySpec({
-      name: R.prop('name'),
-      profile_image: R.prop('picture'),
-      id: R.prop('user_id'),
-      email: R.prop('email'),
-      email_verified: R.prop('email_verified')
-    }))
+//     .then(R.applySpec({
+//       name: R.prop('name'),
+//       profile_image: R.prop('picture'),
+//       id: R.prop('user_id'),
+//       email: R.prop('email'),
+//       email_verified: R.prop('email_verified')
+//     }))
 
-    .catch( err => {
-      ctx.status = 400
-      ctx.body = {
-        message: err.message,
-        code: err.code
-      }
-    })
-}
+//     .catch( err => {
+//       ctx.status = 400
+//       ctx.body = {
+//         message: err.message,
+//         code: err.code
+//       }
+//     })
+// }
 
 
-const logout = (ctx, next) => {
-  ctx.session = null
-  ctx.status = 200
-  ctx.cookies.set('x-access-token', null)
-  ctx.cookies.set('x-access_token.sig', null)
-  ctx.body = {
-    message: "Logout successfully"
-  }
-}
+// const logout = (ctx, next) => {
+//   ctx.session = null
+//   ctx.status = 200
+//   ctx.cookies.set('x-access-token', null)
+//   ctx.cookies.set('x-access_token.sig', null)
+//   ctx.body = {
+//     message: "Logout successfully"
+//   }
+// }
 
 
 export default {
   signup,
-  login,
-  logout
+  // login,
+  // logout
 }

@@ -1,6 +1,6 @@
 import R from 'ramda'
-import { Model } from 'pimp-my-sql'
-
+import { Model } from '../lib/mysql/index.js'
+// import { Model } from 'pimp-my-sql'
 const _model = Model({
   table: 'product_image'
 })

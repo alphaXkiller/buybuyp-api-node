@@ -1,6 +1,6 @@
 import R from 'ramda'
 import Bluebird from 'bluebird'
-import { auth } from '../domain/index.js'
+import { Auth } from '../domain/index.js'
 
 
 const validateAuth = async (ctx, next) => {
@@ -11,7 +11,7 @@ const validateAuth = async (ctx, next) => {
       R.split(' ')
     )(header.authorization)
 
-    await Bluebird.resolve(auth().verifyIdToken(id_token))
+    await Bluebird.resolve(Auth().verifyIdToken(id_token))
 
       .then( decoded => { ctx.state.user = { id: decoded.user_id } } )
 

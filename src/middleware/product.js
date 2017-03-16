@@ -1,7 +1,7 @@
 import R from 'ramda'
 import Bluebird from 'bluebird'
 
-import { Product, Image, ProductImage } from '../domain/index.js'
+import { Product, Image, ProductImage, Auth } from '../domain/index.js'
 
 const save = async (ctx, next) =>
   Product.save(ctx.mysql, {
@@ -37,7 +37,12 @@ const getById = async (ctx, next) =>
   .then( ({product, images}) => { ctx.body = R.merge(product)({images}) } )
 
 
+const search = async (ctx, next) => Product.search(ctx.mysql, {}) 
+  .then( result => { ctx.body = result } )
+
+
 export default {
   save,
-  getById
+  getById,
+  search
 }

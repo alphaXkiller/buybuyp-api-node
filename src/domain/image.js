@@ -1,6 +1,8 @@
 import R from 'ramda'
 import Bluebird from 'bluebird'
-import { Model } from 'pimp-my-sql'
+import { Model } from '../lib/mysql/index.js'
+
+// import { Model } from 'pimp-my-sql'
 
 const _model = Model({
   table: 'image',
@@ -27,11 +29,6 @@ const getByIds = R.curry((mysql, {ids}) => Bluebird.map(ids, id =>
 
 const getByProductId = R.curry((mysql, {product_id}) => {
   const clause = {
-    select: `
-      \`product_image\`.\`id\`         AS \`product_image.id\`,
-      \`product_image\`.\`product_id\` AS \`product_image.product_id\`,
-      \`product_image\`.\`image_id\`   AS \`product_image.image_id\`
-    `,
     join: `
       LEFT JOIN \`product_image\`
         ON \`product_image\`.\`image_id\` = \`image\`.\`id\`
