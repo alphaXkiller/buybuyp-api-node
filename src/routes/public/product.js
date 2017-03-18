@@ -6,6 +6,8 @@ const routes = () => {
 
   router.get('/', Product.search)
 
+  router.get('/:id', Product.getById)
+
   return router.routes()
 }
 
