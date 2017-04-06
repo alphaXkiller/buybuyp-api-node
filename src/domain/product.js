@@ -34,7 +34,17 @@ const save = _model.save
 const getById = mysql => ({id}) => _model.getById(mysql, id)
 
 
-const search = R.curry( (mysql, params) => _model.search({}, mysql, {}) )
+const search = R.curry( (mysql, params) => {
+  const map = {
+    keyword: () => ({
+      normalize: R.compose(R.concat(R.__, '%'), R.concat('%')),
+      where: `AND \`product\`.\`name\` LIKE :keyword`
+    })
+  }
+
+  return _model.search(map, mysql, params)
+})
+
 
 export default {
   getById,

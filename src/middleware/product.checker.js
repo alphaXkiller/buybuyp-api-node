@@ -34,6 +34,31 @@ const checkPostBody = async (ctx, next) => {
 }
 
 
+const awesomizeQuery = async (ctx, next) => {
+  await Awesomize({}, v => ({
+    limit: { validate: [ v.isInt ], normalize: [ R.defaultTo('16') ] },
+    page: { validate: [ v.isInt ], normalize: [ R.defaultTo('1') ] },
+    keyword: {}
+  }))(ctx.request.query)
+
+  .tap(SetErrIfInvalid)
+
+  .then( ({ data }) => {
+    ctx.checker = data
+
+    return next()
+  } )
+
+  .catch( err => {
+    if (err.status === 400) {
+      ctx.status = 400
+      ctx.body = err
+    } else throw err
+  } )
+}
+
+
 export default {
-  checkPostBody
+  checkPostBody,
+  awesomizeQuery
 }

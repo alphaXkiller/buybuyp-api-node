@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import ProductChecker from '../middleware/production.checker.js'
+import ProductChecker from '../middleware/product.checker.js'
 import Product        from '../middleware/product.js'
 
 const routes = () => {
