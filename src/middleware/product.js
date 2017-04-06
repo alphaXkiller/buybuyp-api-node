@@ -2,6 +2,7 @@ import R from 'ramda'
 import Bluebird from 'bluebird'
 
 import { Product, Image, ProductImage, Auth } from '../domain/index.js'
+import { notEmpty } from '../lib/helpers.js'
 
 
 // ======================================
@@ -63,7 +64,11 @@ const getById = async (ctx, next) => Bluebird
 
 
 const search = async (ctx, next) => Product
-  .search(ctx.mysql, {}) 
+  .search(ctx.mysql, {
+    keyword: ctx.checker.keyword,
+    page: ctx.checker.page,
+    limit: ctx.checker.limit
+  }) 
 
   .then( obj => {
     const list = R.compose(
@@ -71,12 +76,15 @@ const search = async (ctx, next) => Product
       R.prop('rows')
     )(obj)
 
-    return Image
-      .getByProductIds(ctx.mysql, {list})
+    if (R.isEmpty(list))
+      return obj
+    else
+      return Image
+        .getByProductIds(ctx.mysql, {list})
 
-      .then(R.groupBy(R.prop('product_id')))
+        .then(R.groupBy(R.prop('product_id')))
 
-      .then(mergeGroupToRowsById(obj, 'images'))
+        .then(mergeGroupToRowsById(obj, 'images'))
   })
 
   .then( result => { ctx.body = result } )
