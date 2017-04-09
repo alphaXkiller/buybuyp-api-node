@@ -27,7 +27,14 @@ const getByUid = R.curry( (mysql, {uid}) => {
 })
 
 
+const getByUidList = R.curry((mysql, uid_list) => {
+  const where = 'AND `user`.`uid` IN (?)'
+  return _model.getWhere(where, mysql, [uid_list])
+})
+
+
 export default {
   save,
-  getByUid
+  getByUid,
+  getByUidList
 }

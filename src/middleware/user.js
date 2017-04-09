@@ -1,4 +1,5 @@
 import R from 'ramda'
+import Bluebird from 'bluebird'
 
 import { User } from '../domain/index.js'
 
@@ -18,6 +19,12 @@ const addIfNotFound = async (ctx, next) => User
   .then( () => { ctx.body={ success: true } } )
 
 
+const getByUidList = async (ctx, next) => User
+  .getByUidList(ctx.mysql, ctx.request.body.uid_list)
+  .then(res => { ctx.body = res })
+
+
 export default {
-  addIfNotFound
+  addIfNotFound,
+  getByUidList
 }

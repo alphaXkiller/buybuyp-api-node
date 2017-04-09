@@ -5,6 +5,8 @@ import User from '../middleware/user.js'
 const routes = () => {
   const router = Router()
 
+  router.post('/get-by-uids', User.getByUidList)
+
   router.post('/:uid/validate',
     // (ctx, next) => { 
     //   console.log(ctx.mysql)
