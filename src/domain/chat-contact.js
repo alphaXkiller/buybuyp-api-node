@@ -8,8 +8,8 @@ const _model = Model({
     select: R.join('\n', [
       'SELECT',
       '`chat_contact`.`id`                     AS `id`,',
-      '`chat_contact`.`user_id_1`              AS `user_id_1`,',
-      '`chat_contact`.`user_id_1`              AS `user_id_1`,',
+      '`chat_contact`.`uid_1`                  AS `uid_1`,',
+      '`chat_contact`.`uid_2`                  AS `uid_2`,',
       '`chat_contact`.`last_contact_timestamp` AS `last_contact_timestamp`'
     ]),
     where: 'WHERE `chat_contact`.`deleted` = 0',
@@ -24,8 +24,8 @@ const getById = _model.getById
 
 const getByUserId = R.curry((mysql, user_id) => {
   const where = R.join('\n', [
-    'AND (`chat_contact`.`user_id_1` = ?',
-    'OR `chat_contact`.`user_id_2` = ?)',
+    'AND (`chat_contact`.`uid_1` = ?',
+    'OR `chat_contact`.`uid_2` = ?)',
   ])
   return _model.getWhere(where, mysql, [user_id, user_id])
 })
@@ -33,6 +33,6 @@ const getByUserId = R.curry((mysql, user_id) => {
 
 export default {
   save,
-  getById
-  getByUserId,
+  getById,
+  getByUserId
 }
