@@ -41,7 +41,10 @@ const throwInsertFailedError = (sql, params) => {
 
 const throwNotFoundError = _.curry((sql, params) => {
   const param_string = inspect(params);
-  throw new Error(`Not Found: \nSQL: ${sql}\nPARAMS: ${param_string}`);
+  let err = new Error(`Not Found: \nSQL: ${sql}\nPARAMS: ${param_string}`)
+  err.name = 'not_found'
+
+  throw err
 });
 
 

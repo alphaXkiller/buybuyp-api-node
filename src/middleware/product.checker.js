@@ -36,9 +36,10 @@ const checkPostBody = async (ctx, next) => {
 
 const awesomizeQuery = async (ctx, next) => {
   await Awesomize({}, v => ({
-    limit: { validate: [ v.isInt ], normalize: [ R.defaultTo('16') ] },
-    page: { validate: [ v.isInt ], normalize: [ R.defaultTo('1') ] },
-    keyword: {}
+    limit   : { validate : [ v.isInt ], normalize : [ R.defaultTo('16') ] },
+    page    : { validate : [ v.isInt ], normalize : [ R.defaultTo('1') ] },
+    keyword : {},
+    cid     : { validate : [ v.isInt ] }
   }))(ctx.request.query)
 
   .tap(SetErrIfInvalid)
