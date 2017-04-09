@@ -7,7 +7,6 @@ import Public_Product_Category from './public/product-category.js'
 import Image                   from './image.js'
 import User                    from './user.js'
 import Product                 from './product.js'
-import ChatContact             from './chat-contact.js'
 import ChatChannel             from './chat-channel.js'
 
 const router = Router()
@@ -31,7 +30,6 @@ export default {
   Image,
   User,
   Product,
-  ChatContact,
   ChatChannel,
 
   Public
