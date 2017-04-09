@@ -38,6 +38,7 @@ router.use('/product-category', Routes.Public.ProductCategory())
 router.use('/api/user', Routes.User())
 router.use('/api/product', Routes.Product())
 router.use('/api/image', Routes.Image())
+router.use('/api/chat-contact', Routes.ChatContact())
 
 app
   .use(router.routes())
