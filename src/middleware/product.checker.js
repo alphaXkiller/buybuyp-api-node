@@ -39,7 +39,12 @@ const awesomizeQuery = async (ctx, next) => {
     limit   : { validate : [ v.isInt ], normalize : [ R.defaultTo('16') ] },
     page    : { validate : [ v.isInt ], normalize : [ R.defaultTo('1') ] },
     keyword : {},
-    cid     : { validate : [ v.isInt ] }
+    cid     : { validate : [ v.isInt ] },
+    price_min : { validate: [ v.isInt ] },
+    price_max : { validate: [ v.isInt ] },
+    order_by : { 
+      validate: [ v.isIn(['posted', 'price', '-posted', '-price']) ] 
+    }
   }))(ctx.request.query)
 
   .tap(SetErrIfInvalid)

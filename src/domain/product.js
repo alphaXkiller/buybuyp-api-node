@@ -53,6 +53,31 @@ const search = R.curry( (mysql, params) => {
     cid: () => ({
       where: 'AND `product_category`.`id` = :cid'
     })
+    ,
+    price_min: () => ({
+      where: 'AND `product`.`price` >= :price_min'
+    })
+    ,
+    price_max: () => ({
+      where: 'AND `product`.`price` <= : price_max'
+    })
+    ,
+    order_by: value => {
+      const str = 'ORDER BY `product`.'
+      const order = R.cond([
+        [ R.equals('price'), R.always(str.concat('`price` DESC')) ],
+        [ R.equals('-price'), R.always(str.concat('`price` ASC')) ],
+        [ R.equals('posted'), 
+          R.always(str.concat('`created_timestamp` DESC'))
+        ],
+        [ R.equals('-posted'), 
+          R.always(str.concat('`created_timestamp` ASC'))
+        ],
+        [ R.T,  R.always('')]
+      ])(value)
+
+      return { order }
+    }
   }
 
   const _params = R.filter(notNil)(params)
