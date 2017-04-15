@@ -2,7 +2,7 @@ import R from 'ramda'
 import V from 'validator'
 import Awesomize from 'awesomize'
 
-import { SetErrIfInvalid } from '../lib/awesomize-util.js'
+import { SetErrIfInvalid, isNum } from '../lib/awesomize-util.js'
 
 const checkPostBody = async (ctx, next) => {
   await Awesomize({}, (v) => ({
@@ -36,12 +36,12 @@ const checkPostBody = async (ctx, next) => {
 
 const awesomizeQuery = async (ctx, next) => {
   await Awesomize({}, v => ({
-    limit   : { validate : [ v.isInt ], normalize : [ R.defaultTo('16') ] },
+    limit   : { validate : [ v.isInt ], normalize : [ R.defaultTo('10') ] },
     page    : { validate : [ v.isInt ], normalize : [ R.defaultTo('1') ] },
     keyword : {},
     cid     : { validate : [ v.isInt ] },
-    price_min : { validate: [ v.isInt ] },
-    price_max : { validate: [ v.isInt ] },
+    price_min : { validate: [ isNum ] },
+    price_max : { validate: [ isNum ] },
     order_by : { 
       validate: [ v.isIn(['posted', 'price', '-posted', '-price']) ] 
     }

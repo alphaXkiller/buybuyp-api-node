@@ -2,7 +2,10 @@ import R from 'ramda'
 import { Model } from '../lib/mysql/index.js'
 
 const _model = Model({
-  table: 'product_category'
+  table: 'product_category',
+  sql: {
+    order: 'ORDER BY `product_category`.`name` ASC'
+  }
 })
 
 

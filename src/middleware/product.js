@@ -82,7 +82,7 @@ const search = async (ctx, next) => Product
     limit     : ctx.checker.limit,
     cid       : ctx.checker.cid,
     price_min : ctx.checker.price_min,
-    price_max : ctx.checker.price_manx,
+    price_max : ctx.checker.price_max,
     order_by  : ctx.checker.order_by,
     order     : ctx.checker.order
   }) 

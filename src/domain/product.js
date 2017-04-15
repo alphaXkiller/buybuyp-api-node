@@ -14,6 +14,7 @@ const _model = Model({
       '`product`.`description`         AS `description`,',
       '`product`.`price`               AS `price`,',
       '`product`.`product_category_id` AS `product_category_id`,',
+      '`product`.`feature_image_id`    AS `feature_image_id`,',
       '`product`.`uid`                 AS `uid`,',
       '`product`.`address`             AS `address`,',
       '`product`.`created_timestamp`   AS `created_timestamp`,',
@@ -59,7 +60,7 @@ const search = R.curry( (mysql, params) => {
     })
     ,
     price_max: () => ({
-      where: 'AND `product`.`price` <= : price_max'
+      where: 'AND `product`.`price` <= :price_max'
     })
     ,
     order_by: value => {
