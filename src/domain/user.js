@@ -11,7 +11,7 @@ const _model = Model({
       '`user`.`uid`            AS `uid`,',
       '`user`.`email`          AS `email`,',
       '`user`.`email_verified` AS `email_verified`,',
-      '`user`.`profile_image`  AS `profile_iamge`,',
+      '`user`.`profile_image`  AS `profile_image`,',
       '`user`.`name`           AS `name`'
     ])
   }
