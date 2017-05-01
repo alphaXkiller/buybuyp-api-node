@@ -4,6 +4,7 @@ import Product         from './product.js'
 import ProductImage    from './product-image.js'
 import ProductCategory from './product-category.js'
 import User            from './user.js'
+import UserContact     from './user-contact.js'
 
 import Firebase from '../lib/firebase.js'
 const Auth = Firebase.Auth
@@ -15,5 +16,6 @@ export {
   Product,
   ProductImage,
   ProductCategory,
-  User
+  User,
+  UserContact
 }

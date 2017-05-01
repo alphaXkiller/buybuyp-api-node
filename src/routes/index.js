@@ -4,10 +4,11 @@ import Public_Authenticate     from './public/authenticate.js'
 import Public_Product          from './public/product.js'
 import Public_Product_Category from './public/product-category.js'
 
-import Image                   from './image.js'
-import User                    from './user.js'
-import Product                 from './product.js'
-import ChatChannel             from './chat-channel.js'
+import Image          from './image.js'
+import User           from './user.js'
+import Product        from './product.js'
+import Contact        from './contact.js'
+// import ChatChannel from './chat-channel.js'
 
 const router = Router()
 
@@ -30,7 +31,8 @@ export default {
   Image,
   User,
   Product,
-  ChatChannel,
+  // ChatChannel,
+  Contact,
 
   Public
 }
