@@ -37,7 +37,6 @@ const getAllContacts = async (ctx, next) => UserContact
 
 const searchContact = async (ctx, next) => UserContact
   .search(ctx.mysql, {
-    in_chat  : ctx.checker.in_chat,
     user_uid : ctx.state.user.uid
   })
 

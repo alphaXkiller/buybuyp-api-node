@@ -4,7 +4,7 @@ import { Auth } from '../domain/index.js'
 
 
 const validateAuth = async (ctx, next) => {
-  if (ctx.url.startsWith('/api/')) {
+  if (ctx.url.startsWith('/private/')) {
     const header = R.path(['request', 'header'])(ctx)
     const id_token = R.compose(
       R.last,
