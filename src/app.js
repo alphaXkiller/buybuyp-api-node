@@ -32,9 +32,9 @@ app.use(ValidateAuth)
 app.use(MysqlPlugin)
 
 router.use('/', Routes.Index())
-router.use('/authenticate', Routes.Public.Authenticate())
 router.use('/product', Routes.Public.Product())
 router.use('/product-category', Routes.Public.ProductCategory())
+
 router.use('/private/user', Routes.User())
 router.use('/private/product', Routes.Product())
 router.use('/private/image', Routes.Image())

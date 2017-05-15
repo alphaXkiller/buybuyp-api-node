@@ -1,4 +1,3 @@
-import ChatChannel     from './chat-channel.js'
 import Image           from './image.js'
 import Product         from './product.js'
 import ProductImage    from './product-image.js'
@@ -11,7 +10,6 @@ const Auth = Firebase.Auth
 
 export {
   Auth,
-  ChatChannel,
   Image,
   Product,
   ProductImage,

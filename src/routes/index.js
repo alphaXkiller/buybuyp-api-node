@@ -1,6 +1,5 @@
 import Router from 'koa-router'
 
-import Public_Authenticate     from './public/authenticate.js'
 import Public_Product          from './public/product.js'
 import Public_Product_Category from './public/product-category.js'
 
@@ -8,7 +7,6 @@ import Image          from './image.js'
 import User           from './user.js'
 import Product        from './product.js'
 import Contact        from './contact.js'
-// import ChatChannel from './chat-channel.js'
 
 const router = Router()
 
@@ -23,7 +21,6 @@ const Index = () => {
 const Public = {
   Product         : Public_Product,
   ProductCategory : Public_Product_Category,
-  Authenticate    : Public_Authenticate
 }
 
 export default {
@@ -31,7 +28,6 @@ export default {
   Image,
   User,
   Product,
-  // ChatChannel,
   Contact,
 
   Public
