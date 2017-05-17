@@ -9,7 +9,11 @@ const routes = () => {
 
   router.post('/', UserChecker.addContact, User.addContact)
 
-  router.get('/', UserChecker.searchContact, User.searchContact)
+  router.get('/', User.searchContact)
+
+  router.post('/unreadMessageCount', 
+    UserChecker.unreadMsgCount 
+  )
 
   return router.routes()
 }

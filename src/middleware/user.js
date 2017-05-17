@@ -6,7 +6,7 @@ import { notEmpty } from '../lib/helpers.js'
 
 
 const addIfNotFound = async (ctx, next) => User
-  .getByUid(ctx.mysql, {uid: ctx.params.uid})   
+  .getByUid(ctx.mysql, ctx.params.uid)   
 
   // TODO: grab info from checker
   .tap(R.when(R.isNil, () => User.save(ctx.mysql, [{
@@ -25,42 +25,43 @@ const addIfNotFound = async (ctx, next) => User
 //   .then(res => { ctx.body = res })
 
 
-const getAllContacts = async (ctx, next) => UserContact
-  .getAllContacts(ctx.mysql, {uid: ctx.state.user.uid})
-
-  .then(R.pluck('contact_uid'))
-
-  .then(User.getByUids(ctx.mysql))
-
-  .then( contacts => { ctx.body = contacts } )
-
-
 const searchContact = async (ctx, next) => UserContact
   .search(ctx.mysql, {
     user_uid : ctx.state.user.uid
   })
 
-  .then( res => R.composeP(
+  .then( user_contact => R.composeP(
     result => { ctx.body = result },
     R.ifElse(
       notEmpty, 
       R.composeP(
-        rows => R.set(R.lensProp('rows'), rows, res),
+        rows => R.set(R.lensProp('rows'), rows, user_contact),
+        R.map( contact => R.compose(
+          match => R.merge(contact, { unread_message: match.unread_message }),
+          R.find(R.propEq('contact_uid', contact.uid)),
+        )(user_contact.rows)),
         User.getByUids(ctx.mysql)
       ),
-      R.always(res)
+      R.always(user_contact)
     ),
     R.pluck('contact_uid'),
     R.prop('rows'),
     Bluebird.resolve
-  )(res))
+  )(user_contact))
 
 
 const addContact = async (ctx, next) => UserContact
   .save(ctx.mysql, [{
-    uid: ctx.state.user.uid,
+    user_uid: ctx.state.user.uid,
     contact_uid: ctx.checker.contact_uid
   }])
+
+  .then( user_contact => User
+    .getByUid(ctx.mysql, user_contact.contact_uid)
+    .then( contact => R.merge(
+      contact, { unread_message: user_contact.unread_message }
+    ))
+  )
 
   .then( res => { ctx.body = res })
 

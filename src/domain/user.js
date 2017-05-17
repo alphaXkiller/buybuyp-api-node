@@ -21,7 +21,7 @@ const _model = Model({
 const save = _model.save
 
 
-const getByUid = R.curry( (mysql, {uid}) => {
+const getByUid = R.curry( (mysql, uid) => {
   const where = 'AND `user`.`uid` = ?'
   return _model.getWhere(where, mysql, [uid]).then(R.head)
 })

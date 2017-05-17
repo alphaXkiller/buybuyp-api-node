@@ -5,6 +5,18 @@ import R         from 'ramda'
 
 import { SetErrIfInvalid } from '../lib/awesomize-util.js'
 
+
+const Field = {
+  contact_uid: R.path(['request', 'body', 'contact_uid']),
+  unread_message: R.path(['request', 'body', 'unread_message'])
+}
+
+
+const getField = ctx => R.reduce(
+  (acc, val) => R.merge(acc, {[val] : Field[val](ctx)}), {}
+)
+
+
 const addContact = async (ctx, next) => {
   const contact_uid = R.path(['request', 'body', 'contact_uid'])(ctx)
 
@@ -21,23 +33,29 @@ const addContact = async (ctx, next) => {
 }
 
 
+const unreadMsgCount = async (ctx, next) => {
+  const field = getField(ctx)(['contact_uid', 'unread_message'])
+
+  await Awesomize({}, v => ({
+    contact_uid: [ v.required ],
+    unread_message: [ v.required ]
+  }))(field)
+
+  .then(SetErrIfInvalid)
+
+  .then(() => {
+    ctx.checker = field
+
+    return next()
+  })
+}
+
 const searchContact = async (ctx, next) => {
-  const in_chat = R.path(['request', 'query', 'in_chat'], ctx)
-
-  await Awesomize({},  v => ({
-    in_chat: {
-      normalize: [ R.ifElse(R.equals('1'), R.T, R.always(null)) ]
-    }
-  }))({in_chat})
-
-    .then( res => {
-      ctx.checker = { in_chat: res.data.in_chat }
-      return next()
-    } )
 }
 
 
 export default {
   addContact,
-  searchContact
+  searchContact,
+  unreadMsgCount
 }
