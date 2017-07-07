@@ -2,7 +2,7 @@ node_modules
 yarn.lock
 build
 build.zip
+_must_hide
 
 .DS_Store
 
-_must_hide/
