@@ -6,8 +6,8 @@ import Tester from 'mysql'
 const pool = PMysql.createPool({
   connectionLimit: 2,
   host: 'life-is-beautiful.ctn77leeq8zt.us-west-2.rds.amazonaws.com',
-  user: 'root',
-  password: 'Test123Test',
+  user: '',
+  password: '',
   database: 'lib',
   namedPlaceholders: true,
   Promise: Bluebird
@@ -25,8 +25,8 @@ const test = async (ctx, next) => {
   const _pool = Tester.createPool({
     connectionLimit: 2,
     host: 'life-is-beautiful.ctn77leeq8zt.us-west-2.rds.amazonaws.com',
-    user: 'root',
-    password: 'Test123Test',
+    user: '',
+    password: '',
     database: 'lib'
   })
 
