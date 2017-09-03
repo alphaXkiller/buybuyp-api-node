@@ -11,7 +11,7 @@ const _model = Model({
       '`user`.`uid`            AS `uid`,',
       '`user`.`email`          AS `email`,',
       '`user`.`email_verified` AS `email_verified`,',
-      '`user`.`profile_image`  AS `profile_iamge`,',
+      '`user`.`profile_image`  AS `profile_image`,',
       '`user`.`name`           AS `name`'
     ])
   }
@@ -21,13 +21,20 @@ const _model = Model({
 const save = _model.save
 
 
-const getByUid = R.curry( (mysql, {uid}) => {
+const getByUid = R.curry( (mysql, uid) => {
   const where = 'AND `user`.`uid` = ?'
   return _model.getWhere(where, mysql, [uid]).then(R.head)
 })
 
 
+const getByUids = R.curry( (mysql, uids) => {
+  const where = 'AND `user`.`uid` IN (?)'
+  return _model.getWhere(where, mysql, [uids])
+})
+
+
 export default {
   save,
-  getByUid
+  getByUid,
+  getByUids,
 }

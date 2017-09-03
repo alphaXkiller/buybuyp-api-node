@@ -62,12 +62,29 @@ const getById = async (ctx, next) => Bluebird
 
   .then( ({product, images}) => { ctx.body = R.merge(product)({images}) } )
 
+  .catch(R.ifElse(
+    R.propEq('name', 'not_found'),
+    () => {
+      ctx.status = 404
+      ctx.body   = {
+        code: 'Not Found',
+        message: `Product(${ctx.params.id}) Not Found`
+      }
+    },
+    err => { throw err }
+  ))
+
 
 const search = async (ctx, next) => Product
   .search(ctx.mysql, {
-    keyword: ctx.checker.keyword,
-    page: ctx.checker.page,
-    limit: ctx.checker.limit
+    keyword   : ctx.checker.keyword,
+    page      : ctx.checker.page,
+    limit     : ctx.checker.limit,
+    cid       : ctx.checker.cid,
+    price_min : ctx.checker.price_min,
+    price_max : ctx.checker.price_max,
+    order_by  : ctx.checker.order_by,
+    order     : ctx.checker.order
   }) 
 
   .then( obj => {

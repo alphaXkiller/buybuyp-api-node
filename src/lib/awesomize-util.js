@@ -23,6 +23,17 @@ const SetErrIfInvalid = R.compose(
 )
 
 
+const isNum = R.compose(
+  R.ifElse(
+    R.equals(true),
+    R.always(null),
+    R.always('It is not a number')
+  ),
+  R.is(Number),
+  parseFloat
+)
+
 export {
-  SetErrIfInvalid
+  SetErrIfInvalid,
+  isNum
 }
